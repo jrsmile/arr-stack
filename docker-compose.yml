@@ -103,7 +103,7 @@ services:
     - PGID=1000
     - TZ=Europe/Berlin
     - DOCKER_MODS=linuxserver/mods:lazylibrarian-ffmpeg #optional
-  image: lscr.io/linuxserver/lazylibrarian
+  image: linuxserver/lazylibrarian
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.lazylib.rule=rule=Host(`lazylib.docker`)"
@@ -168,6 +168,8 @@ services:
     - /var/run/docker.sock:/var/run/docker.sock:ro
   environment:
     - DNS_DOMAIN=docker
+    - HOSTMACHINE_IP=127.0.0.1
+    - EXTRA_HOSTS="" # optional
   image: ruudud/devdns
 
 volumes:
