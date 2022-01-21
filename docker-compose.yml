@@ -58,6 +58,28 @@ services:
    - TZ=Europe/Berlin
   image: linuxserver/jackett
 
+ transmission:
+    image: lscr.io/linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      #- TRANSMISSION_WEB_HOME=/combustion-release/ #optional
+      #- USER=username #optional
+      #- PASS=password #optional
+      #- WHITELIST=iplist #optional
+      #- HOST_WHITELIST=dnsnane list #optional
+    volumes:
+      - /home/user/transmission:/config
+      - /home/user/downloads:/downloads
+      - /home/user/downloads:/watch
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped
+
  vpn:
   container_name: vpn
   cap_add:
@@ -79,7 +101,7 @@ services:
     - default
   ports:
     - 8118:8118
-  restart: always
+  restart: unless-stopped
   image: jeroenslot/nordvpn-proxy:latest
 
 volumes:
