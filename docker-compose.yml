@@ -192,6 +192,7 @@ services:
     - LOCAL_NETWORK=192.168.178.0/24
     - COUNTRY=DE
   networks:
+    - default
     - traefik-net
   image: jeroenslot/nordvpn-proxy:latest
 
