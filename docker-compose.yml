@@ -106,7 +106,7 @@ services:
   image: linuxserver/lazylibrarian
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.lazylib.rule=rule=Host(`lazylib.docker`)"
+    - "traefik.http.routers.lazylib.rule=Host(`lazylib.docker`)"
     - "traefik.http.routers.lazylib.entrypoints=web"
 
  transmission:
@@ -132,7 +132,7 @@ services:
   image: lscr.io/linuxserver/transmission
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.trans.rule=rule=Host(`trans.docker`)"
+    - "traefik.http.routers.trans.rule=Host(`trans.docker`)"
     - "traefik.http.routers.trans.entrypoints=web"
 
  vpn:
