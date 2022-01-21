@@ -58,23 +58,23 @@ services:
    - TZ=Europe/Berlin
   image: linuxserver/jackett
 
-  vpn:
-    image: jeroenslot/nordvpn-proxy:latest
-    cap_add:
-      - NET_ADMIN
-    devices:
-      - /dev/net/tun
-    dns:
-      - 103.86.96.100
-      - 103.86.99.100
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ovpn-data:/app/ovpn/config
-    environment:
-      - LOCAL_NETWORK=192.168.178.0/24
-      - COUNTRY=DE
-    networks:
-      - default
-    ports:
-      - 8118:8118
-    restart: always
+ vpn:
+  cap_add:
+    - NET_ADMIN
+  devices:
+    - /dev/net/tun
+  dns:
+    - 103.86.96.100
+    - 103.86.99.100
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - ovpn-data:/app/ovpn/config
+  environment:
+    - LOCAL_NETWORK=192.168.178.0/24
+    - COUNTRY=DE
+  networks:
+    - default
+  ports:
+    - 8118:8118
+  restart: always
+  image: jeroenslot/nordvpn-proxy:latest
