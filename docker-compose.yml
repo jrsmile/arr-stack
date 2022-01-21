@@ -48,7 +48,7 @@ services:
       - "traefik.http.routers.radarr.rule=Host(`radarr.docker`)"
       - "traefik.http.routers.radarr.entrypoints=web"
       - "traefik.docker.network=arr-stack_traefik-net"
-      - "traefik.port=7878"
+      - "traefik.http.services.radarr.loadbalancer.server.port=7878"
 
  sonarr:
   container_name: sonarr
