@@ -58,27 +58,43 @@ services:
    - TZ=Europe/Berlin
   image: linuxserver/jackett
 
+ lazylibrarian:
+  container_name: lazylibrarian
+  restart: unless-stopped
+  ports:
+    - 5299:5299
+  volumes:
+    - /home/user/lazylib:/config
+    - /home/user/downloads/:/downloads
+    - /home/user/downloads:/books
+  environment:
+    - PUID=1000
+    - PGID=1000
+    - TZ=Europe/Berlin
+    - DOCKER_MODS=linuxserver/calibre-web:calibre|linuxserver/mods:lazylibrarian-ffmpeg #optional
+  image: lscr.io/linuxserver/lazylibrarian
+
  transmission:
-    image: lscr.io/linuxserver/transmission
-    container_name: transmission
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Berlin
-      #- TRANSMISSION_WEB_HOME=/combustion-release/ #optional
-      #- USER=username #optional
-      #- PASS=password #optional
-      #- WHITELIST=iplist #optional
-      #- HOST_WHITELIST=dnsnane list #optional
-    volumes:
-      - /home/user/transmission:/config
-      - /home/user/downloads:/downloads
-      - /home/user/downloads:/watch
-    ports:
-      - 9091:9091
-      - 51413:51413
-      - 51413:51413/udp
-    restart: unless-stopped
+  container_name: transmission
+  restart: unless-stopped
+  ports:
+    - 9091:9091
+    - 51413:51413
+    - 51413:51413/udp
+  volumes:
+    - /home/user/transmission:/config
+    - /home/user/downloads:/downloads
+    - /home/user/downloads:/watch
+  environment:
+    - PUID=1000
+    - PGID=1000
+    - TZ=Europe/Berlin
+    #- TRANSMISSION_WEB_HOME=/combustion-release/ #optional
+    #- USER=username #optional
+    #- PASS=password #optional
+    #- WHITELIST=iplist #optional
+    #- HOST_WHITELIST=dnsnane list #optional
+  image: lscr.io/linuxserver/transmission
 
  vpn:
   container_name: vpn
