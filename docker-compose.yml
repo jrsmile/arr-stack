@@ -58,7 +58,7 @@ services:
    - TZ=Europe/Berlin
   image: linuxserver/jackett
 
-vpn:
+  vpn:
     image: jeroenslot/nordvpn-proxy:latest
     cap_add:
       - NET_ADMIN
