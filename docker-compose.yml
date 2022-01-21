@@ -31,7 +31,7 @@ services:
   image: linuxserver/radarr
   labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.radarr.rule=PathPrefix(`/radarr`)"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.docker`)"
       - "traefik.http.routers.radarr.entrypoints=web"
 
  sonarr:
@@ -50,7 +50,7 @@ services:
   image: linuxserver/sonarr
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.sonarr.rule=PathPrefix(`/sonarr`)"
+    - "traefik.http.routers.sonarr.rule=Host(`sonarr.docker`)"
     - "traefik.http.routers.sonarr.entrypoints=web"
 
  lidarr:
@@ -69,7 +69,7 @@ services:
   image: linuxserver/lidarr
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.lidarr.rule=PathPrefix(`/lidarr`)"
+    - "traefik.http.routers.lidarr.rule=Host(`lidarr.docker`)"
     - "traefik.http.routers.lidarr.entrypoints=web"
 
  jackett:
@@ -86,7 +86,7 @@ services:
   image: linuxserver/jackett
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.jackett.rule=PathPrefix(`/jackett`)"
+    - "traefik.http.routers.jackett.rule=Host(`jackett.docker`)"
     - "traefik.http.routers.jackett.entrypoints=web"
 
  lazylibrarian:
@@ -102,11 +102,11 @@ services:
     - PUID=1000
     - PGID=1000
     - TZ=Europe/Berlin
-    - DOCKER_MODS=linuxserver/calibre-web:calibre|linuxserver/mods:lazylibrarian-ffmpeg #optional
+    - DOCKER_MODS=linuxserver/mods:lazylibrarian-ffmpeg #optional
   image: lscr.io/linuxserver/lazylibrarian
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.lazylib.rule=PathPrefix(`/lazylib`)"
+    - "traefik.http.routers.lazylib.rule=rule=Host(`lazylib.docker`)"
     - "traefik.http.routers.lazylib.entrypoints=web"
 
  transmission:
@@ -132,11 +132,14 @@ services:
   image: lscr.io/linuxserver/transmission
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.trans.rule=PathPrefix(`/trans`)"
+    - "traefik.http.routers.trans.rule=rule=Host(`trans.docker`)"
     - "traefik.http.routers.trans.entrypoints=web"
 
  vpn:
   container_name: vpn
+  restart: unless-stopped
+  ports:
+    - 8118:8118
   cap_add:
     - NET_ADMIN
   devices:
@@ -154,10 +157,18 @@ services:
     - COUNTRY=DE
   networks:
     - default
-  ports:
-    - 8118:8118
-  restart: unless-stopped
   image: jeroenslot/nordvpn-proxy:latest
+
+ dns:
+  container_name: dns
+  restart: unless-stopped
+  ports:
+    - 53:53/udp
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+  environment:
+    - DNS_DOMAIN=docker
+  image: ruudud/devdns
 
 volumes:
   ovpn-data:
