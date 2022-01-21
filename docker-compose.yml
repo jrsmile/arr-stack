@@ -30,7 +30,7 @@ services:
    - TZ=Europe/Berlin
   image: linuxserver/sonarr
 
- sonarr:
+ lidarr:
   container_name: lidarr
   restart: unless-stopped
   ports:
@@ -59,6 +59,7 @@ services:
   image: linuxserver/jackett
 
  vpn:
+  container_name: vpn
   cap_add:
     - NET_ADMIN
   devices:
