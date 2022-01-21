@@ -47,7 +47,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.radarr.rule=Host(`radarr.docker`)"
       - "traefik.http.routers.radarr.entrypoints=web"
-      - "traefik.docker.network=arr-stack_traefik-web"
+      - "traefik.docker.network=arr-stack_traefik-net"
       - "traefik.port=7878"
 
  sonarr:
@@ -70,6 +70,8 @@ services:
     - "traefik.enable=true"
     - "traefik.http.routers.sonarr.rule=Host(`sonarr.docker`)"
     - "traefik.http.routers.sonarr.entrypoints=web"
+    - "traefik.docker.network=arr-stack_traefik-net"
+    - "traefik.port=8989"
 
  lidarr:
   container_name: lidarr
@@ -91,6 +93,8 @@ services:
     - "traefik.enable=true"
     - "traefik.http.routers.lidarr.rule=Host(`lidarr.docker`)"
     - "traefik.http.routers.lidarr.entrypoints=web"
+    - "traefik.docker.network=arr-stack_traefik-net"
+    - "traefik.port=8686"
 
  jackett:
   container_name: jackett
@@ -110,6 +114,8 @@ services:
     - "traefik.enable=true"
     - "traefik.http.routers.jackett.rule=Host(`jackett.docker`)"
     - "traefik.http.routers.jackett.entrypoints=web"
+    - "traefik.docker.network=arr-stack_traefik-net"
+    - "traefik.port=9117"
 
  lazylibrarian:
   container_name: lazylibrarian
@@ -132,6 +138,8 @@ services:
     - "traefik.enable=true"
     - "traefik.http.routers.lazylib.rule=Host(`lazylib.docker`)"
     - "traefik.http.routers.lazylib.entrypoints=web"
+    - "traefik.docker.network=arr-stack_traefik-net"
+    - "traefik.port=5299"
 
  transmission:
   container_name: transmission
@@ -160,6 +168,8 @@ services:
     - "traefik.enable=true"
     - "traefik.http.routers.trans.rule=Host(`trans.docker`)"
     - "traefik.http.routers.trans.entrypoints=web"
+    - "traefik.docker.network=arr-stack_traefik-net"
+    - "traefik.port=9091"
 
  vpn:
   container_name: vpn
