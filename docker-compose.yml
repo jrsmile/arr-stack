@@ -31,7 +31,7 @@ services:
   image: linuxserver/radarr
   labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`radarr.localhost`)"
+      - "traefik.http.routers.whoami.rule=PathPrefix(`/radarr`)"
       - "traefik.http.routers.whoami.entrypoints=web"
 
  sonarr:
@@ -50,7 +50,7 @@ services:
   image: linuxserver/sonarr
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.whoami.rule=Host(`sonarr.localhost`)"
+    - "traefik.http.routers.whoami.rule=PathPrefix(`/sonarr`)"
     - "traefik.http.routers.whoami.entrypoints=web"
 
  lidarr:
@@ -69,7 +69,7 @@ services:
   image: linuxserver/lidarr
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.whoami.rule=Host(`lidarr.localhost`)"
+    - "traefik.http.routers.whoami.rule=PathPrefix(`/lidarr`)"
     - "traefik.http.routers.whoami.entrypoints=web"
 
  jackett:
@@ -86,7 +86,7 @@ services:
   image: linuxserver/jackett
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.whoami.rule=Host(`jackett.localhost`)"
+    - "traefik.http.routers.whoami.rule=PathPrefix(`/jackett`)"
     - "traefik.http.routers.whoami.entrypoints=web"
 
  lazylibrarian:
@@ -106,7 +106,7 @@ services:
   image: lscr.io/linuxserver/lazylibrarian
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.whoami.rule=Host(`lazylib.localhost`)"
+    - "traefik.http.routers.whoami.rule=PathPrefix(`/lazylib`)"
     - "traefik.http.routers.whoami.entrypoints=web"
 
  transmission:
@@ -132,7 +132,7 @@ services:
   image: lscr.io/linuxserver/transmission
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.whoami.rule=Host(`trans.localhost`)"
+    - "traefik.http.routers.whoami.rule=PathPrefix(`/trans`)"
     - "traefik.http.routers.whoami.entrypoints=web"
 
  vpn:
