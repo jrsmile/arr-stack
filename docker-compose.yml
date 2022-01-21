@@ -47,6 +47,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.radarr.rule=Host(`radarr.docker`)"
       - "traefik.http.routers.radarr.entrypoints=web"
+      - "traefik.docker.network=traefik-web"
+      - "traefik.port=7878"
 
  sonarr:
   container_name: sonarr
