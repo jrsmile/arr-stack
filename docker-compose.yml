@@ -41,7 +41,6 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/radarr
-  network_mode: "service:vpn"
   networks:
     - traefik-net
   labels:
@@ -65,7 +64,6 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/sonarr
-  network_mode: "service:vpn"
   networks:
     - traefik-net
   labels:
@@ -89,7 +87,6 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/lidarr
-  network_mode: "service:vpn"
   networks:
     - traefik-net
   labels:
@@ -111,7 +108,6 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/jackett
-  network_mode: "service:vpn"
   networks:
     - traefik-net
   labels:
@@ -136,7 +132,6 @@ services:
     - TZ=Europe/Berlin
     - DOCKER_MODS=linuxserver/mods:lazylibrarian-ffmpeg #optional
   image: linuxserver/lazylibrarian
-  network_mode: "service:vpn"
   networks:
     - traefik-net
   labels:
@@ -167,7 +162,6 @@ services:
     #- WHITELIST=iplist #optional
     #- HOST_WHITELIST=dnsnane list #optional
   image: lscr.io/linuxserver/transmission
-  network_mode: "service:vpn"
   networks:
     - traefik-net
   labels:
