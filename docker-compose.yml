@@ -78,3 +78,6 @@ services:
     - 8118:8118
   restart: always
   image: jeroenslot/nordvpn-proxy:latest
+
+volumes:
+  ovpn-data:
