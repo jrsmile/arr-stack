@@ -15,6 +15,9 @@ services:
     - "--providers.docker.exposedbydefault=false"
     - "--entrypoints.web.address=:80"
   image: "traefik:v2.5"
+  networks:
+    - default
+    - traefik-net
   labels:
    - "traefik.enable=true"
    - "traefik.http.routers.dashboard.rule=Host(`traefik.docker`)"
@@ -38,6 +41,8 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/radarr
+  networks:
+    - traefik-net
   labels:
       - "traefik.enable=true"
       - "traefik.http.routers.radarr.rule=Host(`radarr.docker`)"
@@ -57,6 +62,8 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/sonarr
+  networks:
+    - traefik-net
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.sonarr.rule=Host(`sonarr.docker`)"
@@ -76,6 +83,8 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/lidarr
+  networks:
+    - traefik-net
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.lidarr.rule=Host(`lidarr.docker`)"
@@ -93,6 +102,8 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/jackett
+  networks:
+    - traefik-net
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.jackett.rule=Host(`jackett.docker`)"
@@ -113,6 +124,8 @@ services:
     - TZ=Europe/Berlin
     - DOCKER_MODS=linuxserver/mods:lazylibrarian-ffmpeg #optional
   image: linuxserver/lazylibrarian
+  networks:
+    - traefik-net
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.lazylib.rule=Host(`lazylib.docker`)"
@@ -139,6 +152,8 @@ services:
     #- WHITELIST=iplist #optional
     #- HOST_WHITELIST=dnsnane list #optional
   image: lscr.io/linuxserver/transmission
+  networks:
+    - traefik-net
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.trans.rule=Host(`trans.docker`)"
@@ -165,7 +180,7 @@ services:
     - LOCAL_NETWORK=192.168.178.0/24
     - COUNTRY=DE
   networks:
-    - default
+    - traefik-net
   image: jeroenslot/nordvpn-proxy:latest
 
  dns:
@@ -183,3 +198,6 @@ services:
 
 volumes:
   ovpn-data:
+
+networks:
+ traefik-net:
