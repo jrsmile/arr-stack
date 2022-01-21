@@ -1,5 +1,20 @@
 version: '3'
 services:
+ traefik:
+  image: "traefik:v2.5"
+  container_name: "traefik"
+  command:
+    #- "--log.level=DEBUG"
+    - "--api.insecure=true"
+    - "--providers.docker=true"
+    - "--providers.docker.exposedbydefault=false"
+    - "--entrypoints.web.address=:80"
+  ports:
+    - "80:80"
+    - "8080:8080"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
  radarr:
   container_name: radarr
   restart: unless-stopped
@@ -14,6 +29,10 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/radarr
+  labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`radarr.localhost`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
 
  sonarr:
   container_name: sonarr
@@ -29,6 +48,10 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/sonarr
+  labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.whoami.rule=Host(`sonarr.localhost`)"
+    - "traefik.http.routers.whoami.entrypoints=web"
 
  lidarr:
   container_name: lidarr
@@ -44,6 +67,10 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/lidarr
+  labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.whoami.rule=Host(`lidarr.localhost`)"
+    - "traefik.http.routers.whoami.entrypoints=web"
 
  jackett:
   container_name: jackett
@@ -57,6 +84,10 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/jackett
+  labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.whoami.rule=Host(`jackett.localhost`)"
+    - "traefik.http.routers.whoami.entrypoints=web"
 
  lazylibrarian:
   container_name: lazylibrarian
@@ -73,14 +104,18 @@ services:
     - TZ=Europe/Berlin
     - DOCKER_MODS=linuxserver/calibre-web:calibre|linuxserver/mods:lazylibrarian-ffmpeg #optional
   image: lscr.io/linuxserver/lazylibrarian
+  labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.whoami.rule=Host(`lazylib.localhost`)"
+    - "traefik.http.routers.whoami.entrypoints=web"
 
  transmission:
   container_name: transmission
   restart: unless-stopped
   ports:
     - 9091:9091
-    - 51414:51413
-    - 51414:51413/udp
+    #- 51413:51413
+    #- 51413:51413/udp
   volumes:
     - /home/user/transmission:/config
     - /home/user/downloads:/downloads
@@ -95,6 +130,10 @@ services:
     #- WHITELIST=iplist #optional
     #- HOST_WHITELIST=dnsnane list #optional
   image: lscr.io/linuxserver/transmission
+  labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.whoami.rule=Host(`trans.localhost`)"
+    - "traefik.http.routers.whoami.entrypoints=web"
 
  vpn:
   container_name: vpn
