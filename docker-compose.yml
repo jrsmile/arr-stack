@@ -79,8 +79,8 @@ services:
   restart: unless-stopped
   ports:
     - 9091:9091
-    - 51413:51413
-    - 51413:51413/udp
+    - 51414:51413
+    - 51414:51413/udp
   volumes:
     - /home/user/transmission:/config
     - /home/user/downloads:/downloads
