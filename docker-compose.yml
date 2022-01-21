@@ -201,3 +201,4 @@ volumes:
 
 networks:
  traefik-net:
+  driver: custom-driver-1
