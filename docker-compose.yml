@@ -31,8 +31,8 @@ services:
   image: linuxserver/radarr
   labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=PathPrefix(`/radarr`)"
-      - "traefik.http.routers.whoami.entrypoints=web"
+      - "traefik.http.routers.radarr.rule=PathPrefix(`/radarr`)"
+      - "traefik.http.routers.radarr.entrypoints=web"
 
  sonarr:
   container_name: sonarr
@@ -50,8 +50,8 @@ services:
   image: linuxserver/sonarr
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.whoami.rule=PathPrefix(`/sonarr`)"
-    - "traefik.http.routers.whoami.entrypoints=web"
+    - "traefik.http.routers.sonarr.rule=PathPrefix(`/sonarr`)"
+    - "traefik.http.routers.sonarr.entrypoints=web"
 
  lidarr:
   container_name: lidarr
@@ -69,8 +69,8 @@ services:
   image: linuxserver/lidarr
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.whoami.rule=PathPrefix(`/lidarr`)"
-    - "traefik.http.routers.whoami.entrypoints=web"
+    - "traefik.http.routers.lidarr.rule=PathPrefix(`/lidarr`)"
+    - "traefik.http.routers.lidarr.entrypoints=web"
 
  jackett:
   container_name: jackett
@@ -86,8 +86,8 @@ services:
   image: linuxserver/jackett
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.whoami.rule=PathPrefix(`/jackett`)"
-    - "traefik.http.routers.whoami.entrypoints=web"
+    - "traefik.http.routers.jackett.rule=PathPrefix(`/jackett`)"
+    - "traefik.http.routers.jackett.entrypoints=web"
 
  lazylibrarian:
   container_name: lazylibrarian
@@ -106,8 +106,8 @@ services:
   image: lscr.io/linuxserver/lazylibrarian
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.whoami.rule=PathPrefix(`/lazylib`)"
-    - "traefik.http.routers.whoami.entrypoints=web"
+    - "traefik.http.routers.lazylib.rule=PathPrefix(`/lazylib`)"
+    - "traefik.http.routers.lazylib.entrypoints=web"
 
  transmission:
   container_name: transmission
@@ -132,8 +132,8 @@ services:
   image: lscr.io/linuxserver/transmission
   labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.whoami.rule=PathPrefix(`/trans`)"
-    - "traefik.http.routers.whoami.entrypoints=web"
+    - "traefik.http.routers.trans.rule=PathPrefix(`/trans`)"
+    - "traefik.http.routers.trans.entrypoints=web"
 
  vpn:
   container_name: vpn
