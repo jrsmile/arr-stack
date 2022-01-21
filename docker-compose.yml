@@ -1,19 +1,25 @@
 version: '3'
 services:
  traefik:
-  image: "traefik:v2.5"
-  container_name: "traefik"
+  container_name: traefik
+  restart: unless-stopped
+  ports:
+    - "80:80"
+    - "8080:8080"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock:ro"
   command:
     #- "--log.level=DEBUG"
     - "--api.insecure=true"
     - "--providers.docker=true"
     - "--providers.docker.exposedbydefault=false"
     - "--entrypoints.web.address=:80"
-  ports:
-    - "80:80"
-    - "8080:8080"
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  image: "traefik:v2.5"
+  labels:
+   - "traefik.enable=true"
+   - "traefik.http.routers.dashboard.rule=Host(`traefik.docker`)"
+   - "traefik.http.routers.dashboard.entrypoints=web"
+   - "traefik.http.routers.dashboard.service=dashboard@internal"
 
  radarr:
   container_name: radarr
