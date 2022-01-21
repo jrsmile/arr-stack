@@ -20,6 +20,9 @@ services:
    - "traefik.http.routers.dashboard.rule=Host(`traefik.docker`)"
    - "traefik.http.routers.dashboard.entrypoints=web"
    - "traefik.http.routers.dashboard.service=dashboard@internal"
+   - "traefik.http.routers.api.rule=Host(`traefik.docker`) && PathPrefix(`/api`)"
+   - "traefik.http.routers.api.entrypoints=web"
+   - "traefik.http.routers.api.service=api@internal"
 
  radarr:
   container_name: radarr
