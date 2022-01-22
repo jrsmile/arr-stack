@@ -323,6 +323,7 @@ services:
  netshoot:
     image: nicolaka/netshoot
     container_name: netshoot
+    command: /bin/bash
     volumes:
       - /home/user:/data
     restart: always
