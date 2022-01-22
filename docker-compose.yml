@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 services:
  traefik:
   container_name: traefik
@@ -26,6 +26,10 @@ services:
    - "traefik.http.routers.api.rule=Host(`traefik.docker`) && PathPrefix(`/api`)"
    - "traefik.http.routers.api.entrypoints=web"
    - "traefik.http.routers.api.service=api@internal"
+  logging:
+   driver: json-file
+   options:
+    max-size: 1m
 
  radarr:
   container_name: radarr
@@ -49,6 +53,10 @@ services:
       - "traefik.http.routers.radarr.entrypoints=web"
       - "traefik.docker.network=arr-stack_traefik-net"
       - "traefik.http.services.radarr.loadbalancer.server.port=7878"
+  logging:
+   driver: json-file
+   options:
+    max-size: 1m
 
  sonarr:
   container_name: sonarr
@@ -72,6 +80,10 @@ services:
     - "traefik.http.routers.sonarr.entrypoints=web"
     - "traefik.docker.network=arr-stack_traefik-net"
     - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
+  logging:
+   driver: json-file
+   options:
+    max-size: 1m
 
  lidarr:
   container_name: lidarr
@@ -95,6 +107,10 @@ services:
     - "traefik.http.routers.lidarr.entrypoints=web"
     - "traefik.docker.network=arr-stack_traefik-net"
     - "traefik.http.services.lidarr.loadbalancer.server.port=8686"
+  logging:
+   driver: json-file
+   options:
+    max-size: 1m
 
  jackett:
   container_name: jackett
@@ -116,6 +132,10 @@ services:
     - "traefik.http.routers.jackett.entrypoints=web"
     - "traefik.docker.network=arr-stack_traefik-net"
     - "traefik.http.services.jackett.loadbalancer.server.port=9117"
+  logging:
+   driver: json-file
+   options:
+    max-size: 1m
 
  lazylibrarian:
   container_name: lazylibrarian
@@ -140,6 +160,10 @@ services:
     - "traefik.http.routers.lazylib.entrypoints=web"
     - "traefik.docker.network=arr-stack_traefik-net"
     - "traefik.http.services.lazylib.loadbalancer.server.port=5299"
+  logging:
+   driver: json-file
+   options:
+    max-size: 1m
 
  transmission:
   container_name: transmission
@@ -170,6 +194,10 @@ services:
     - "traefik.http.routers.trans.entrypoints=web"
     - "traefik.docker.network=arr-stack_traefik-net"
     - "traefik.http.services.trans.loadbalancer.server.port=9091"
+  logging:
+   driver: json-file
+   options:
+    max-size: 1m
 
  vpn:
   container_name: vpn
@@ -192,9 +220,14 @@ services:
     - LOCAL_NETWORK=192.168.178.0/24
     - COUNTRY=DE
   networks:
-    - default
-    - traefik-net
+    default:
+    traefik-net:
+     ipv4_address: 172.16.238.250
   image: jeroenslot/nordvpn-proxy:latest
+  logging:
+   driver: json-file
+   options:
+    max-size: 1m
 
  dns:
   container_name: dns
@@ -208,6 +241,10 @@ services:
     - HOSTMACHINE_IP=127.0.0.1
     - EXTRA_HOSTS="" # optional
   image: ruudud/devdns
+  logging:
+   driver: json-file
+   options:
+    max-size: 1m
 
 volumes:
   ovpn-data:
@@ -215,3 +252,8 @@ volumes:
 networks:
  traefik-net:
   driver: ipvlan
+  ipam:
+   driver: default
+   config:
+   - subnet: "172.16.238.0/24"
+   - gateway: 172.16.238.250
