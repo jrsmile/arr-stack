@@ -315,6 +315,10 @@ services:
       - UN_WEBHOOK_0_CONTENT_TYPE=application/json
     security_opt:
       - no-new-privileges:true
+    logging:
+     driver: json-file
+     options:
+      max-size: 1m
 
  vpn:
   container_name: vpn
