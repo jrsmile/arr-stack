@@ -373,7 +373,7 @@ services:
     - 9696:9696 # prowlarr
     - 8787:8787 # readarr
     - 8191:8191 # flaresolverr
-    - 6789:6789 # nzbget
+    #- 6789:6789 # nzbget
     - 80:80 # traefik
     - 8080:8080 # traefik dashboard
   cap_add:
@@ -411,6 +411,7 @@ services:
   container_name: vpn2
   restart: unless-stopped
   ports:
+    - 8119:8118 # privoxy
     - 6789:6789 # nzbget
   cap_add:
     - NET_ADMIN
