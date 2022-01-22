@@ -306,7 +306,7 @@ services:
       - UN_WEBHOOK_0_NAME=
       - UN_WEBHOOK_0_NICKNAME=Unpackerr
       - UN_WEBHOOK_0_CHANNEL=
-      - UN_WEBHOOK_0_TIMEOUT=5
+      - UN_WEBHOOK_0_TIMEOUT=5s
       - UN_WEBHOOK_0_SILENT=true
       - UN_WEBHOOK_0_IGNORE_SSL=false
       - UN_WEBHOOK_0_EXCLUDE=[]
