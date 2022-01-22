@@ -198,7 +198,7 @@ services:
     - 8118:8118 # privoxy
     - 9091:9091 # transmission
     - 5299:5299 # lazylib
-    - 9117:91117 # jackett
+    - 9117:9117 # jackett
     - 8686:8686 # lidarr
     - 8989:8989 # sonarr
     - 7878:7878 # radarr
