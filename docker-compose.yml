@@ -101,13 +101,12 @@ services:
   restart: unless-stopped
   #ports:
    #- 9696:9696
+  volumes:
+    - /home/user/prowlarr:/config
   environment:
     - PUID=1000
     - PGID=1000
     - TZ=Europe/Berlin
-  volumes:
-    - /path/to/data:/config
-
   image: ghcr.io/linuxserver/prowlarr:develop
   network_mode: "service:vpn"
   labels:
