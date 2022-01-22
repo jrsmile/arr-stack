@@ -323,7 +323,7 @@ services:
  netshoot:
     image: nicolaka/netshoot
     container_name: netshoot
-    command: sleep 100000
+    command: tail -f /dev/null
     volumes:
       - /home/user:/data
     restart: always
