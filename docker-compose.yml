@@ -320,6 +320,20 @@ services:
      options:
       max-size: 1m
 
+ netshoot:
+    image: nicolaka/netshoot
+    container_name: netshoot
+    volumes:
+      - /home/user:/data
+    restart: always
+    user: 1000:1000
+    security_opt:
+      - no-new-privileges:true
+    logging:
+     driver: json-file
+     options:
+      max-size: 1m
+
  vpn:
   container_name: vpn
   restart: unless-stopped
