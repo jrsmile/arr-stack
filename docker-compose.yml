@@ -526,6 +526,33 @@ services:
    options:
     max-size: 1m
 
+ tdarr:
+    container_name: tdarr
+    image: haveagitgat/tdarr:latest
+    restart: unless-stopped
+    ports:
+      - 8265:8265 # webUI port
+      - 8266:8266 # server port
+    environment:
+      - TZ=Europe/London
+      - PUID=1000
+      - PGID=1000
+      - UMASK_SET=002
+      - serverIP=0.0.0.0
+      - serverPort=8266
+      - webUIPort=8265
+    volumes:
+      - /home/user/tdarr/server:/app/server
+      - /home/user/tdarr/configs:/app/configs
+      - /home/user/tdarr/logs:/app/logs
+      - /home/user/downloads:/media
+      - /home/user/tdarr/transcode_cache:/temp
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.tdarr.rule=Host(`tdarr.docker`)"
+    - "traefik.http.routers.tdarr.entrypoints=web"
+    - "traefik.http.services.tdarr.loadbalancer.server.port=8265"
+
  jellyfin:
     image: lscr.io/linuxserver/jellyfin
     container_name: jellyfin
