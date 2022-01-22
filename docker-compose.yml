@@ -103,6 +103,8 @@ services:
    #- 8787:8787
   volumes:
     - /home/user/readarr:/config
+    - /home/user/downloads:/downloads
+    - /home/user/downloads:/books
   environment:
     - PUID=1000
     - PGID=1000
