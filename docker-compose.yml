@@ -225,6 +225,30 @@ services:
    options:
     max-size: 1m
 
+ nzbget:
+    image: lscr.io/linuxserver/nzbget
+    container_name: nzbget
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+    volumes:
+      - /home/user/nzbget:/config
+      - /home/user/downloads:/downloads
+    #ports:
+      #- 6789:6789
+    restart: unless-stopped
+    network_mode: "service:vpn"
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.nzbget.rule=Host(`nzbget.docker`)"
+    - "traefik.http.routers.nzbget.entrypoints=web"
+    - "traefik.http.services.nzbget.loadbalancer.server.port=6789"
+    logging:
+     driver: json-file
+     options:
+      max-size: 1m
+
  flaresolverr:
     image: flaresolverr/flaresolverr:latest
     container_name: flaresolverr
@@ -349,6 +373,7 @@ services:
     - 9696:9696 # prowlarr
     - 8787:8787 # readarr
     - 8191:8191 # flaresolverr
+    - 6789:6789 # nzbget
     - 80:80 # traefik
     - 8080:8080 # traefik dashboard
   cap_add:
