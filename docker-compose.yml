@@ -107,7 +107,7 @@ services:
     - PUID=1000
     - PGID=1000
     - TZ=Europe/Berlin
-  image: ghcr.io/linuxserver/readarr
+  image: linuxserver/readarr
   network_mode: "service:vpn"
   labels:
     - "traefik.enable=true"
