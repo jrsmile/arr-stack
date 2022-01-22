@@ -249,6 +249,47 @@ services:
      options:
       max-size: 1m
 
+ aria2:
+    container_name: aria2
+    image: p3terx/aria2-pro
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK_SET=022
+      - RPC_SECRET=secret
+      - RPC_PORT=6800
+      - LISTEN_PORT=6888
+      - DISK_CACHE=64M
+      - IPV6_MODE=false
+      - UPDATE_TRACKERS=true
+      - CUSTOM_TRACKER_URL=
+      - TZ=Asia/Shanghai
+    volumes:
+      - /home/user/aria2:/config
+      - /home/user/downloads:/downloads
+    network_mode: "service:vpn3"
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+
+ ariang:
+    container_name: ariang
+    image: p3terx/ariang
+    command: --port 6880 --ipv6
+    network_mode: "service:vpn3"
+    restart: unless-stopped
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.ariang.rule=Host(`ariang.docker`)"
+    - "traefik.http.routers.ariang.entrypoints=web"
+    - "traefik.http.services.ariang.loadbalancer.server.port=6880"
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+
  flaresolverr:
     image: flaresolverr/flaresolverr:latest
     container_name: flaresolverr
@@ -428,6 +469,38 @@ services:
     - PASSWORD=${PASSWORD}
     - LOCAL_NETWORK=192.168.178.0/24
     - COUNTRY=BE
+  networks:
+    - default
+  image: jeroenslot/nordvpn-proxy:latest
+  logging:
+   driver: json-file
+   options:
+    max-size: 1m
+
+ vpn3:
+  container_name: vpn3
+  restart: unless-stopped
+  ports:
+    - 8120:8118 # privoxy
+    - 6800:6800 # aria
+    - 6888:6888 # aria rpc
+    - 6888:6888/udp
+    - 6880:6880 # aria-web
+  cap_add:
+    - NET_ADMIN
+  devices:
+    - /dev/net/tun
+  dns:
+    - 103.86.96.100
+    - 103.86.99.100
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - ovpn-data:/app/ovpn/config
+  environment:
+    - USERNAME=${USERNAME}
+    - PASSWORD=${PASSWORD}
+    - LOCAL_NETWORK=192.168.178.0/24
+    - COUNTRY=NL
   networks:
     - default
   image: jeroenslot/nordvpn-proxy:latest
