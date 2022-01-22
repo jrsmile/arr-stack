@@ -114,6 +114,10 @@ services:
     - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.docker`)"
     - "traefik.http.routers.prowlarr.entrypoints=web"
     - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
+  logging:
+   driver: json-file
+   options:
+    max-size: 1m
 
  jackett:
   container_name: jackett
