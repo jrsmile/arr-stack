@@ -16,14 +16,6 @@ services:
     - "--entrypoints.web.address=:80"
   image: "traefik:v2.5"
   network_mode: "service:vpn"
-  labels:
-   - "traefik.enable=true"
-   - "traefik.http.routers.dashboard.rule=Host(`traefik.docker`)"
-   - "traefik.http.routers.dashboard.entrypoints=web"
-   - "traefik.http.routers.dashboard.service=dashboard@internal"
-   - "traefik.http.routers.api.rule=Host(`traefik.docker`) && PathPrefix(`/api`)"
-   - "traefik.http.routers.api.entrypoints=web"
-   - "traefik.http.routers.api.service=api@internal"
   logging:
    driver: json-file
    options:
@@ -221,6 +213,14 @@ services:
   networks:
     - default
   image: jeroenslot/nordvpn-proxy:latest
+  labels:
+  - "traefik.enable=true"
+  - "traefik.http.routers.dashboard.rule=Host(`traefik.docker`)"
+  - "traefik.http.routers.dashboard.entrypoints=web"
+  - "traefik.http.routers.dashboard.service=dashboard@internal"
+  - "traefik.http.routers.api.rule=Host(`traefik.docker`) && PathPrefix(`/api`)"
+  - "traefik.http.routers.api.entrypoints=web"
+  - "traefik.http.routers.api.service=api@internal"
   logging:
    driver: json-file
    options:
