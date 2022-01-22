@@ -258,4 +258,3 @@ networks:
    - subnet: 172.250.0.0/24
    - gateway: 172.250.0.100
   internal: true
-  attachable: true
