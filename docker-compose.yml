@@ -222,7 +222,7 @@ services:
   networks:
     default:
     traefik-net:
-     ipv4_address: 172.250.0.250
+     ipv4_address: 172.250.0.100
   image: jeroenslot/nordvpn-proxy:latest
   logging:
    driver: json-file
@@ -251,9 +251,10 @@ volumes:
 
 networks:
  traefik-net:
-  driver: ipvlan
+  driver: bridge
   ipam:
    driver: default
    config:
    - subnet: 172.250.0.0/24
-   - gateway: 172.250.0.250
+   - gateway: 172.250.0.100
+  internal: true
