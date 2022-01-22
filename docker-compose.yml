@@ -1,10 +1,10 @@
-version: '3.4'
+version: '3.8'
 services:
  traefik:
   container_name: traefik
   restart: unless-stopped
-  ports:
-    - "80:80"
+  #ports:
+    # - "80:80"
     #- "8080:8080"
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock:ro"
@@ -15,9 +15,7 @@ services:
     - "--providers.docker.exposedbydefault=false"
     - "--entrypoints.web.address=:80"
   image: "traefik:v2.5"
-  networks:
-    - default
-    - traefik-net
+  network_mode: "service:vpn"
   labels:
    - "traefik.enable=true"
    - "traefik.http.routers.dashboard.rule=Host(`traefik.docker`)"
@@ -34,8 +32,8 @@ services:
  radarr:
   container_name: radarr
   restart: unless-stopped
-  ports:
-   - 7878:7878
+  #ports:
+   #- 7878:7878
   volumes:
    - /home/user/radarr:/config
    - /home/user/downloads:/downloads
@@ -45,8 +43,7 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/radarr
-  networks:
-    - traefik-net
+  network_mode: "service:vpn"
   labels:
       - "traefik.enable=true"
       - "traefik.http.routers.radarr.rule=Host(`radarr.docker`)"
@@ -61,8 +58,8 @@ services:
  sonarr:
   container_name: sonarr
   restart: unless-stopped
-  ports:
-   - 8989:8989
+  #ports:
+   #- 8989:8989
   volumes:
    - /home/user/sonarr:/config
    - /home/user/downloads:/downloads
@@ -72,8 +69,7 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/sonarr
-  networks:
-    - traefik-net
+  network_mode: "service:vpn"
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.sonarr.rule=Host(`sonarr.docker`)"
@@ -88,8 +84,8 @@ services:
  lidarr:
   container_name: lidarr
   restart: unless-stopped
-  ports:
-   - 8686:8686
+  #ports:
+   #- 8686:8686
   volumes:
    - /home/user/lidarr:/config
    - /home/user/downloads:/downloads
@@ -99,8 +95,7 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/lidarr
-  networks:
-    - traefik-net
+  network_mode: "service:vpn"
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.lidarr.rule=Host(`lidarr.docker`)"
@@ -115,8 +110,8 @@ services:
  jackett:
   container_name: jackett
   restart: unless-stopped
-  ports:
-   - 9117:9117
+  #ports:
+   #- 9117:9117
   volumes:
    - /home/user/jackett:/config
   environment:
@@ -124,8 +119,7 @@ services:
    - PGID=1000
    - TZ=Europe/Berlin
   image: linuxserver/jackett
-  networks:
-    - traefik-net
+  network_mode: "service:vpn"
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.jackett.rule=Host(`jackett.docker`)"
@@ -140,8 +134,8 @@ services:
  lazylibrarian:
   container_name: lazylibrarian
   restart: unless-stopped
-  ports:
-    - 5299:5299
+  #ports:
+    #- 5299:5299
   volumes:
     - /home/user/lazylib:/config
     - /home/user/downloads/:/downloads
@@ -152,8 +146,7 @@ services:
     - TZ=Europe/Berlin
     - DOCKER_MODS=linuxserver/mods:lazylibrarian-ffmpeg #optional
   image: linuxserver/lazylibrarian
-  networks:
-    - traefik-net
+  network_mode: "service:vpn"
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.lazylib.rule=Host(`lazylib.docker`)"
@@ -168,8 +161,8 @@ services:
  transmission:
   container_name: transmission
   restart: unless-stopped
-  ports:
-    - 9091:9091
+  #ports:
+    #- 9091:9091
     #- 51413:51413
     #- 51413:51413/udp
   volumes:
@@ -186,8 +179,7 @@ services:
     #- WHITELIST=iplist #optional
     #- HOST_WHITELIST=dnsnane list #optional
   image: lscr.io/linuxserver/transmission
-  networks:
-    - traefik-net
+  network_mode: "service:vpn"
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.trans.rule=Host(`trans.docker`)"
@@ -203,7 +195,14 @@ services:
   container_name: vpn
   restart: unless-stopped
   ports:
-    - 8118:8118
+    - 8118:8118 # privoxy
+    - 9091:9091 # transmission
+    - 5299:5299 # lazylib
+    - 9117:91117 # jackett
+    - 8686:8686 # lidarr
+    - 8989:8989 # sonarr
+    - 7878:7878 # radarr
+    - 80:80 # traefik
   cap_add:
     - NET_ADMIN
   devices:
@@ -220,9 +219,7 @@ services:
     - LOCAL_NETWORK=192.168.178.0/24
     - COUNTRY=DE
   networks:
-    default:
-    traefik-net:
-     ipv4_address: 172.250.0.100
+    - default
   image: jeroenslot/nordvpn-proxy:latest
   logging:
    driver: json-file
@@ -248,13 +245,3 @@ services:
 
 volumes:
   ovpn-data:
-
-networks:
- traefik-net:
-  driver: bridge
-  ipam:
-   driver: default
-   config:
-   - subnet: 172.250.0.0/24
-   - gateway: 172.250.0.100
-  internal: true
