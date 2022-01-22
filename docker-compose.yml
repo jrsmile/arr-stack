@@ -183,6 +183,7 @@ services:
     - 8989:8989 # sonarr
     - 7878:7878 # radarr
     - 80:80 # traefik
+    - 8080:8080 # traefik dashboard
   cap_add:
     - NET_ADMIN
   devices:
