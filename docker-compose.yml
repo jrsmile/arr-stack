@@ -238,7 +238,7 @@ services:
     #ports:
       #- 6789:6789
     restart: unless-stopped
-    network_mode: "service:vpn"
+    network_mode: "service:vpn2"
     labels:
     - "traefik.enable=true"
     - "traefik.http.routers.nzbget.rule=Host(`nzbget.docker`)"
@@ -402,6 +402,34 @@ services:
   - "traefik.http.routers.api.rule=Host(`traefik.docker`) && PathPrefix(`/api`)"
   - "traefik.http.routers.api.entrypoints=web"
   - "traefik.http.routers.api.service=api@internal"
+  logging:
+   driver: json-file
+   options:
+    max-size: 1m
+
+ vpn2:
+  container_name: vpn2
+  restart: unless-stopped
+  ports:
+    - 6789:6789 # nzbget
+  cap_add:
+    - NET_ADMIN
+  devices:
+    - /dev/net/tun
+  dns:
+    - 103.86.96.100
+    - 103.86.99.100
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - ovpn-data:/app/ovpn/config
+  environment:
+    - USERNAME=${USERNAME}
+    - PASSWORD=${PASSWORD}
+    - LOCAL_NETWORK=192.168.178.0/24
+    - COUNTRY=BE
+  networks:
+    - default
+  image: jeroenslot/nordvpn-proxy:latest
   logging:
    driver: json-file
    options:
