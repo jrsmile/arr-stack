@@ -96,6 +96,26 @@ services:
    options:
     max-size: 1m
 
+ prowlarr:
+  container_name: prowlarr
+  restart: unless-stopped
+  #ports:
+   #- 9696:9696
+  environment:
+    - PUID=1000
+    - PGID=1000
+    - TZ=Europe/Berlin
+  volumes:
+    - /path/to/data:/config
+
+  image: ghcr.io/linuxserver/prowlarr:develop
+  network_mode: "service:vpn"
+  labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.docker`)"
+    - "traefik.http.routers.prowlarr.entrypoints=web"
+    - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
+
  jackett:
   container_name: jackett
   restart: unless-stopped
@@ -188,6 +208,7 @@ services:
     - 8686:8686 # lidarr
     - 8989:8989 # sonarr
     - 7878:7878 # radarr
+    - 9696:9696 # prowlarr
     - 80:80 # traefik
     - 8080:8080 # traefik dashboard
   cap_add:
