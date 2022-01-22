@@ -231,7 +231,7 @@ services:
     environment:
       - LOG_LEVEL=${LOG_LEVEL:-info}
       - LOG_HTML=${LOG_HTML:-false}
-      - CAPTCHA_SOLVER=hcaptcha-solver
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
       - TZ=Europe/Berlin
     restart: unless-stopped
     network_mode: "service:vpn"
