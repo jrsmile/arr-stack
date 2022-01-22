@@ -96,6 +96,29 @@ services:
    options:
     max-size: 1m
 
+ readarr:
+  container_name: readarr
+  restart: unless-stopped
+  #ports:
+   #- 8787:8787
+  volumes:
+    - /home/user/readarr:/config
+  environment:
+    - PUID=1000
+    - PGID=1000
+    - TZ=Europe/Berlin
+  image: ghcr.io/linuxserver/readarr
+  network_mode: "service:vpn"
+  labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.readarr.rule=Host(`readarr.docker`)"
+    - "traefik.http.routers.readarr.entrypoints=web"
+    - "traefik.http.services.readarr.loadbalancer.server.port=8787"
+  logging:
+   driver: json-file
+   options:
+    max-size: 1m
+
  prowlarr:
   container_name: prowlarr
   restart: unless-stopped
@@ -212,6 +235,7 @@ services:
     - 8989:8989 # sonarr
     - 7878:7878 # radarr
     - 9696:9696 # prowlarr
+    - 8787:8787 # readarr
     - 80:80 # traefik
     - 8080:8080 # traefik dashboard
   cap_add:
