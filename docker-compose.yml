@@ -139,12 +139,6 @@ services:
     - DOCKER_MODS=linuxserver/mods:lazylibrarian-ffmpeg #optional
   image: linuxserver/lazylibrarian
   network_mode: "service:vpn"
-  labels:
-    - "traefik.enable=true"
-    - "traefik.http.routers.lazylib.rule=Host(`lazylib.docker`)"
-    - "traefik.http.routers.lazylib.entrypoints=web"
-    - "traefik.docker.network=arr-stack_traefik-net"
-    - "traefik.http.services.lazylib.loadbalancer.server.port=5299"
   logging:
    driver: json-file
    options:
@@ -172,12 +166,6 @@ services:
     #- HOST_WHITELIST=dnsnane list #optional
   image: lscr.io/linuxserver/transmission
   network_mode: "service:vpn"
-  labels:
-    - "traefik.enable=true"
-    - "traefik.http.routers.trans.rule=Host(`trans.docker`)"
-    - "traefik.http.routers.trans.entrypoints=web"
-    - "traefik.docker.network=arr-stack_traefik-net"
-    - "traefik.http.services.trans.loadbalancer.server.port=9091"
   logging:
    driver: json-file
    options:
@@ -221,6 +209,13 @@ services:
   - "traefik.http.routers.api.rule=Host(`traefik.docker`) && PathPrefix(`/api`)"
   - "traefik.http.routers.api.entrypoints=web"
   - "traefik.http.routers.api.service=api@internal"
+  - "traefik.http.routers.trans.rule=Host(`trans.docker`)"
+  - "traefik.http.routers.trans.entrypoints=web"
+  - "traefik.http.services.trans.loadbalancer.server.port=9091"
+  - "traefik.http.routers.lazylib.rule=Host(`lazylib.docker`)"
+  - "traefik.http.routers.lazylib.entrypoints=web"
+  - "traefik.docker.network=arr-stack_traefik-net"
+  - "traefik.http.services.lazylib.loadbalancer.server.port=5299"
   logging:
    driver: json-file
    options:
