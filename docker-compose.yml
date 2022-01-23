@@ -391,6 +391,7 @@ services:
     command: tail -f /dev/null
     volumes:
       - /home/user:/data
+      - nas-share:/nas
     restart: always
     user: 1000:1000
     security_opt:
