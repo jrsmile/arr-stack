@@ -628,3 +628,8 @@ services:
 
 volumes:
   ovpn-data:
+  nas-share:
+    driver_opts:
+      type: cifs
+      o: "username=${CIFS_USERNAME},password=${CIFS_PASSWORD}"
+      device: "//192.168.178.22/foldarr"
