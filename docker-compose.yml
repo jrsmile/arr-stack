@@ -28,8 +28,7 @@ services:
    #- 7878:7878
   volumes:
    - /home/user/radarr:/config
-   - /home/user/downloads:/downloads
-   - /home/user/downloads:/movies
+   - nas-share-data:/data
   environment:
    - PUID=1000
    - PGID=1000
@@ -53,8 +52,7 @@ services:
    #- 8989:8989
   volumes:
    - /home/user/sonarr:/config
-   - /home/user/downloads:/downloads
-   - /home/user/downloads:/tv
+   - nas-share-data:/data
   environment:
    - PUID=1000
    - PGID=1000
@@ -78,8 +76,7 @@ services:
    #- 8686:8686
   volumes:
    - /home/user/lidarr:/config
-   - /home/user/downloads:/downloads
-   - /home/user/downloads:/music
+   - nas-share-data:/data
   environment:
    - PUID=1000
    - PGID=1000
@@ -103,8 +100,7 @@ services:
    #- 8787:8787
   volumes:
     - /home/user/readarr:/config
-    - /home/user/downloads:/downloads
-    - /home/user/downloads:/books
+    - nas-share-data:/data
   environment:
     - PUID=1000
     - PGID=1000
@@ -174,8 +170,7 @@ services:
     #- 5299:5299
   volumes:
     - /home/user/lazylib:/config
-    - /home/user/downloads/:/downloads
-    - /home/user/downloads:/books
+    - nas-share-data:/data
   environment:
     - PUID=1000
     - PGID=1000
@@ -202,8 +197,7 @@ services:
     #- 51413:51413/udp
   volumes:
     - /home/user/transmission:/config
-    - /home/user/downloads:/downloads
-    - /home/user/downloads:/watch
+    - nas-share-data:/data
   environment:
     - PUID=1000
     - PGID=1000
@@ -234,7 +228,7 @@ services:
       - TZ=Europe/Berlin
     volumes:
       - /home/user/nzbget:/config
-      - /home/user/downloads:/downloads
+      - nas-share-data:/data
     #ports:
       #- 6789:6789
     restart: unless-stopped
@@ -266,7 +260,7 @@ services:
       - TZ=Asia/Shanghai
     volumes:
       - /home/user/aria2:/config
-      - /home/user/downloads:/downloads
+      - nas-share-data:/data
     network_mode: "service:vpn3"
     restart: unless-stopped
     logging:
@@ -309,7 +303,7 @@ services:
     image: golift/unpackerr
     container_name: unpackerr
     volumes:
-      - /home/user/downloads:/data/downloads
+      - nas-share-data:/data
     restart: always
     user: 1000:1000
     # What you see below are defaults. You only need to include things you change.
@@ -390,9 +384,9 @@ services:
     container_name: netshoot
     command: tail -f /dev/null
     volumes:
-      - /home/user:/data
+      - /home/user:/data-old
       - nas-share-config:/nas/config
-      - nas-share-data:/nas/data
+      - nas-share-data:/data
     restart: always
     user: 1000:1000
     security_opt:
@@ -547,7 +541,7 @@ services:
       - /home/user/tdarr/server:/app/server
       - /home/user/tdarr/configs:/app/configs
       - /home/user/tdarr/logs:/app/logs
-      - /home/user/downloads:/media
+      - nas-share-data:/data
       - /home/user/tdarr/transcode_cache:/temp
     labels:
     - "traefik.enable=true"
@@ -565,8 +559,7 @@ services:
       #- JELLYFIN_PublishedServerUrl=192.168.0.5 #optional
     volumes:
       - /home/user/jellyfin:/config
-      - /home/user/downloads:/data/tvshows
-      - /home/user/downloads:/data/movies
+      - nas-share-data:/data
     ports:
       - 8096:8096
       - 8920:8920 #optional
