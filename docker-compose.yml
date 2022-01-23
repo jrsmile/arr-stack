@@ -391,7 +391,8 @@ services:
     command: tail -f /dev/null
     volumes:
       - /home/user:/data
-      - nas-share:/nas
+      - nas-share-config:/nas/config
+      - nas-share-data:/nas/data
     restart: always
     user: 1000:1000
     security_opt:
@@ -629,8 +630,13 @@ services:
 
 volumes:
   ovpn-data:
-  nas-share:
+  nas-share-config:
     driver_opts:
       type: cifs
       o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
-      device: "//192.168.178.22/foldarr"
+      device: "//192.168.178.22/foldarr/config"
+  nas-share-data:
+    driver_opts:
+      type: cifs
+      o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
+      device: "//192.168.178.22/foldarr/data"
