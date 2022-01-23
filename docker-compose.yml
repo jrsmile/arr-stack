@@ -632,5 +632,5 @@ volumes:
   nas-share:
     driver_opts:
       type: cifs
-      o: "username=${CIFS_USERNAME},password=${CIFS_PASSWORD}"
+      o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
       device: "//192.168.178.22/foldarr"
