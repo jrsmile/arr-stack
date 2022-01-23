@@ -581,5 +581,27 @@ services:
      options:
       max-size: 1m
 
+ muximux:
+    image: lscr.io/linuxserver/muximux
+    container_name: muximux
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+    volumes:
+      - /home/user/muximux:/config
+    ports:
+      - 9712:80
+    restart: unless-stopped
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.muxi.rule=Host(`muxi.docker`)"
+    - "traefik.http.routers.muxi.entrypoints=web"
+    - "traefik.http.services.muxi.loadbalancer.server.port=9712"
+    logging:
+     driver: json-file
+     options:
+      max-size: 1m
+
 volumes:
   ovpn-data:
