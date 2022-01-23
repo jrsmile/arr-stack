@@ -48,7 +48,7 @@ for debugging purposes i included netshoot in the stack, a little vm to attach t
 with glances you get a quick overview about your server and running containers.
 should be **23** without portainer. **#alot**
 
-##**REMINDER:** 
+**REMINDER:**
 
 this is only the stack, internal configuration of any of the containers is not automated (yet), and has to be done by hand with the specific container ips in mind.
 The whole purpose of this Project is to write a application that handels configuration of all containers in synergy.
