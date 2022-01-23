@@ -581,6 +581,29 @@ services:
      options:
       max-size: 1m
 
+ glances:
+    container_name: glances
+    image: joweisberg/glances:latest
+    restart: unless-stopped
+    pid: host
+    ports:
+      - 61208:61208
+    environment:
+      - TZ=Europe/Berlin
+      - GLANCES_OPT=--webserver
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /home/user/glances:/glances/conf
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.glances.rule=Host(`glances.docker`)"
+    - "traefik.http.routers.glances.entrypoints=web"
+    - "traefik.http.services.glances.loadbalancer.server.port=61208"
+    logging:
+     driver: json-file
+     options:
+      max-size: 1m
+
  muximux:
     image: lscr.io/linuxserver/muximux
     container_name: muximux
