@@ -5,6 +5,7 @@ you just have to specify the compose file in portainer as stack and add the foll
 - PASSWORD
 - CIFS_USERNAME
 - CIFS_PASSWORD
+- CIFS_IP
 
 The Stack will require alot of ports, most of them are default to the docker image.
 Due to the fact that it is not possible to set *network_mode: "service:vpn"* and add an additional network interface the traffic server had to be forced to use the host ports, so no clean port 80 only solution.
