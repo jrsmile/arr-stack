@@ -536,7 +536,7 @@ services:
       - GLANCES_OPT=--webserver
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - nas-share-config-glances:/glances/conf
+      - /mnt/f/foldarr/config/glances:/glances/conf
     labels:
     - "traefik.enable=true"
     - "traefik.http.routers.glances.rule=Host(`glances.docker`)"
