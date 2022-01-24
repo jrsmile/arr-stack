@@ -27,7 +27,7 @@ services:
   #ports:
    #- 7878:7878
   volumes:
-   - /home/user/radarr:/config
+   - nas-share-config-radarr:/config
    - nas-share-data:/data
   environment:
    - PUID=1000
@@ -51,7 +51,7 @@ services:
   #ports:
    #- 8989:8989
   volumes:
-   - /home/user/sonarr:/config
+   - nas-share-config-sonarr:/config
    - nas-share-data:/data
   environment:
    - PUID=1000
@@ -75,7 +75,7 @@ services:
   #ports:
    #- 8686:8686
   volumes:
-   - /home/user/lidarr:/config
+   - nas-share-config-lidarr:/config
    - nas-share-data:/data
   environment:
    - PUID=1000
@@ -99,7 +99,7 @@ services:
   #ports:
    #- 8787:8787
   volumes:
-    - /home/user/readarr:/config
+    - nas-share-config-readarr:/config
     - nas-share-data:/data
   environment:
     - PUID=1000
@@ -123,7 +123,7 @@ services:
   #ports:
    #- 9696:9696
   volumes:
-    - /home/user/prowlarr:/config
+    - nas-share-config-prowlarr:/config
   environment:
     - PUID=1000
     - PGID=1000
@@ -148,7 +148,7 @@ services:
     #- 51413:51413
     #- 51413:51413/udp
   volumes:
-    - /home/user/deluge:/config
+    - nas-share-config-:/config
     - nas-share-data:/data
   environment:
     - PUID=1000
@@ -175,7 +175,7 @@ services:
       - PGID=1000
       - TZ=Europe/Berlin
     volumes:
-      - /home/user/nzbget:/config
+      - nas-share-config-nzbget:/config
       - nas-share-data:/data
     #ports:
       #- 6789:6789
@@ -205,9 +205,9 @@ services:
       - IPV6_MODE=false
       - UPDATE_TRACKERS=true
       - CUSTOM_TRACKER_URL=
-      - TZ=Asia/Shanghai
+      - TZ=Europe/berlin
     volumes:
-      - /home/user/aria2:/config
+      - nas-share-config-aria2:/config
       - nas-share-data:/data
     network_mode: "service:vpn3"
     restart: unless-stopped
@@ -486,11 +486,11 @@ services:
       - serverPort=8266
       - webUIPort=8265
     volumes:
-      - /home/user/tdarr/server:/app/server
-      - /home/user/tdarr/configs:/app/configs
-      - /home/user/tdarr/logs:/app/logs
+      - nas-share-config-tdarr:/app/server
+      - nas-share-config-tdarr:/app/configs
+      - nas-share-config-tdarr:/app/logs
       - nas-share-data:/data
-      - /home/user/tdarr/transcode_cache:/temp
+      - nas-share-config-tdarr:/temp
     labels:
     - "traefik.enable=true"
     - "traefik.http.routers.tdarr.rule=Host(`tdarr.docker`)"
@@ -506,7 +506,7 @@ services:
       - TZ=Europe/Berlin
       #- JELLYFIN_PublishedServerUrl=192.168.0.5 #optional
     volumes:
-      - /home/user/jellyfin:/config
+      - nas-share-config-jellyfin:/config
       - nas-share-data:/data
     ports:
       - 8096:8096
@@ -536,7 +536,7 @@ services:
       - GLANCES_OPT=--webserver
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /home/user/glances:/glances/conf
+      - nas-share-config-glances:/glances/conf
     labels:
     - "traefik.enable=true"
     - "traefik.http.routers.glances.rule=Host(`glances.docker`)"
@@ -555,7 +555,7 @@ services:
       - PGID=1000
       - TZ=Europe/Berlin
     volumes:
-      - /home/user/muximux:/config
+      - nas-share-config-muximux:/config
     ports:
       - 9712:80
     restart: unless-stopped
@@ -576,6 +576,66 @@ volumes:
       type: cifs
       o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
       device: "//192.168.178.22/foldarr/config"
+  nas-share-config-lidarr:
+    driver_opts:
+      type: cifs
+      o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
+      device: "//192.168.178.22/foldarr/config/lidarr"
+  nas-share-config-sonarr:
+    driver_opts:
+      type: cifs
+      o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
+      device: "//192.168.178.22/foldarr/config/sonarr"
+  nas-share-config-readarr:
+    driver_opts:
+      type: cifs
+      o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
+      device: "//192.168.178.22/foldarr/config/readarr"
+  nas-share-config-radarr:
+    driver_opts:
+      type: cifs
+      o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
+      device: "//192.168.178.22/foldarr/config/radarr"
+  nas-share-config-prowlarr:
+    driver_opts:
+      type: cifs
+      o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
+      device: "//192.168.178.22/foldarr/config/prowlarr"
+  nas-share-config-deluge:
+    driver_opts:
+      type: cifs
+      o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
+      device: "//192.168.178.22/foldarr/config/deluge"
+  nas-share-config-jellyfin:
+    driver_opts:
+      type: cifs
+      o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
+      device: "//192.168.178.22/foldarr/config/jellyfin"
+  nas-share-config-muximux:
+    driver_opts:
+      type: cifs
+      o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
+      device: "//192.168.178.22/foldarr/config/muximux"
+  nas-share-config-nzbget:
+    driver_opts:
+      type: cifs
+      o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
+      device: "//192.168.178.22/foldarr/config/nzbget"
+  nas-share-config-aria2:
+    driver_opts:
+      type: cifs
+      o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
+      device: "//192.168.178.22/foldarr/config/aria2"
+  nas-share-config-glances:
+    driver_opts:
+      type: cifs
+      o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
+      device: "//192.168.178.22/foldarr/config/glances"
+  nas-share-config-tdarr:
+    driver_opts:
+      type: cifs
+      o: "uid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0770,dir_mode=0770"
+      device: "//192.168.178.22/foldarr/config/tdarr"
   nas-share-data:
     driver_opts:
       type: cifs
