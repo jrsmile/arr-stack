@@ -194,7 +194,7 @@ services:
     restart: unless-stopped
     network_mode: "service:vpn2"
     links:
-    - vpn1
+    - vpn
     - vpn3
     labels:
     - "traefik.enable=true"
@@ -226,7 +226,7 @@ services:
       - nas-share-data:/data
     network_mode: "service:vpn3"
     links:
-    - vpn1
+    - vpn
     - vpn2
     restart: unless-stopped
     logging:
@@ -377,7 +377,6 @@ services:
     - 9696:9696 # prowlarr
     - 8787:8787 # readarr
     - 8191:8191 # flaresolverr
-    #- 6789:6789 # nzbget
     - 80:80 # traefik
     - 8080:8080 # traefik dashboard
   cap_add:
