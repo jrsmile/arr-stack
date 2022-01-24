@@ -574,70 +574,70 @@ volumes:
   nas-share-config:
     driver_opts:
       type: cifs
-      o: "uid=1000,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
+      o: "uid=0,gid=1000,username${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
       device: "//192.168.178.22/foldarr/config"
   nas-share-config-lidarr:
     driver_opts:
       type: cifs
-      o: "uid=1000,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
+      o: "uid=0,gid=1000,username${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
       device: "//192.168.178.22/foldarr/config/lidarr"
   nas-share-config-sonarr:
     driver_opts:
       type: cifs
-      o: "uid=1000,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
+      o: "uid=0,gid=1000,username${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
       device: "//192.168.178.22/foldarr/config/sonarr"
   nas-share-config-readarr:
     driver_opts:
       type: cifs
-      o: "uid=1000,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
+      o: "uid=0,gid=1000,username${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
       device: "//192.168.178.22/foldarr/config/readarr"
   nas-share-config-radarr:
     driver_opts:
       type: cifs
-      o: "uid=1000,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
+      o: "uid=0,gid=1000,username${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
       device: "//192.168.178.22/foldarr/config/radarr"
   nas-share-config-prowlarr:
     driver_opts:
       type: cifs
-      o: "uid=1000,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
+      o: "uid=0,gid=1000,username${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
       device: "//192.168.178.22/foldarr/config/prowlarr"
   nas-share-config-deluge:
     driver_opts:
       type: cifs
-      o: "uid=1000,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
+      o: "uid=0,gid=1000,username${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
       device: "//192.168.178.22/foldarr/config/deluge"
   nas-share-config-jellyfin:
     driver_opts:
       type: cifs
-      o: "uid=1000,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
+      o: "uid=0,gid=1000,username${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
       device: "//192.168.178.22/foldarr/config/jellyfin"
   nas-share-config-muximux:
     driver_opts:
       type: cifs
-      o: "uid=1000,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
+      o: "uid=0,gid=1000,username${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
       device: "//192.168.178.22/foldarr/config/muximux"
   nas-share-config-nzbget:
     driver_opts:
       type: cifs
-      o: "uid=1000,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
+      o: "uid=0,gid=1000,username${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
       device: "//192.168.178.22/foldarr/config/nzbget"
   nas-share-config-aria2:
     driver_opts:
       type: cifs
-      o: "uid=1000,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
+      o: "uid=0,gid=1000,username${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
       device: "//192.168.178.22/foldarr/config/aria2"
   nas-share-config-glances:
     driver_opts:
       type: cifs
-      o: "uid=1000,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
+      o: "uid=0,gid=1000,username${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
       device: "//192.168.178.22/foldarr/config/glances"
   nas-share-config-tdarr:
     driver_opts:
       type: cifs
-      o: "uid=1000,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
+      o: "uid=0,gid=1000,username${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
       device: "//192.168.178.22/foldarr/config/tdarr"
   nas-share-data:
     driver_opts:
       type: cifs
-      o: "uid=1000,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
+      o: "uid=0,gid=1000,username${CIFS_USERNAME},password=${CIFS_PASSWORD},nounix,file_mode=0777,dir_mode=0777"
       device: "//192.168.178.22/foldarr/data"
