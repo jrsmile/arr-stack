@@ -486,11 +486,11 @@ services:
       - serverPort=8266
       - webUIPort=8265
     volumes:
-      - /mnt/f/foldarr/config/tdarr:/app/server
-      - /mnt/f/foldarr/config/:/app/configs
-      - /mnt/f/foldarr/config/:/app/logs
+      - /mnt/f/foldarr/config/tdarr/server:/app/server
+      - /mnt/f/foldarr/config/tdarr/configs:/app/configs
+      - /mnt/f/foldarr/config/tdarr/logs:/app/logs
       - nas-share-data:/data
-      - /mnt/f/foldarr/config/:/temp
+      - /mnt/f/foldarr/config/tdarr/transcode:/temp
     labels:
     - "traefik.enable=true"
     - "traefik.http.routers.tdarr.rule=Host(`tdarr.docker`)"
