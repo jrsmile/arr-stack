@@ -59,9 +59,6 @@ services:
    - TZ=Europe/Berlin
   image: linuxserver/sonarr
   network_mode: "service:vpn"
-  links:
-    - vpn2
-    - vpn3
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.sonarr.rule=Host(`sonarr.docker`)"
@@ -86,9 +83,6 @@ services:
    - TZ=Europe/Berlin
   image: linuxserver/lidarr
   network_mode: "service:vpn"
-  links:
-    - vpn2
-    - vpn3
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.lidarr.rule=Host(`lidarr.docker`)"
@@ -113,9 +107,6 @@ services:
     - TZ=Europe/Berlin
   image: linuxserver/readarr:nightly
   network_mode: "service:vpn"
-  links:
-    - vpn2
-    - vpn3
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.readarr.rule=Host(`readarr.docker`)"
@@ -139,9 +130,6 @@ services:
     - TZ=Europe/Berlin
   image: ghcr.io/linuxserver/prowlarr:develop
   network_mode: "service:vpn"
-  links:
-    - vpn2
-    - vpn3
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.docker`)"
@@ -193,9 +181,6 @@ services:
       #- 6789:6789
     restart: unless-stopped
     network_mode: "service:vpn2"
-    links:
-    - vpn
-    - vpn3
     labels:
     - "traefik.enable=true"
     - "traefik.http.routers.nzbget.rule=Host(`nzbget.docker`)"
@@ -225,9 +210,6 @@ services:
       - /home/user/aria2:/config
       - nas-share-data:/data
     network_mode: "service:vpn3"
-    links:
-    - vpn
-    - vpn2
     restart: unless-stopped
     logging:
       driver: json-file
