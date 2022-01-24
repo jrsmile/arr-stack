@@ -27,7 +27,7 @@ services:
   #ports:
    #- 7878:7878
   volumes:
-   - nas-share-config-radarr:/config
+   - /mnt/f/foldarr/config/radarr:/config
    - nas-share-data:/data
   environment:
    - PUID=1000
@@ -51,7 +51,7 @@ services:
   #ports:
    #- 8989:8989
   volumes:
-   - nas-share-config-sonarr:/config
+   - /mnt/f/foldarr/config/sonarr:/config
    - nas-share-data:/data
   environment:
    - PUID=1000
@@ -75,7 +75,7 @@ services:
   #ports:
    #- 8686:8686
   volumes:
-   - nas-share-config-lidarr:/config
+   - /mnt/f/foldarr/config/lidarr:/config
    - nas-share-data:/data
   environment:
    - PUID=1000
@@ -99,7 +99,7 @@ services:
   #ports:
    #- 8787:8787
   volumes:
-    - nas-share-config-readarr:/config
+    - /mnt/f/foldarr/config/readarr:/config
     - nas-share-data:/data
   environment:
     - PUID=1000
@@ -123,7 +123,7 @@ services:
   #ports:
    #- 9696:9696
   volumes:
-    - nas-share-config-prowlarr:/config
+    - /mnt/f/foldarr/config/prowlarr:/config
   environment:
     - PUID=1000
     - PGID=1000
@@ -148,7 +148,7 @@ services:
     #- 51413:51413
     #- 51413:51413/udp
   volumes:
-    - nas-share-config-deluge:/config
+    - /mnt/f/foldarr/config/deluge:/config
     - nas-share-data:/data
   environment:
     - PUID=1000
@@ -175,7 +175,7 @@ services:
       - PGID=1000
       - TZ=Europe/Berlin
     volumes:
-      - nas-share-config-nzbget:/config
+      - /mnt/f/foldarr/config/nzbget:/config
       - nas-share-data:/data
     #ports:
       #- 6789:6789
@@ -207,7 +207,7 @@ services:
       - CUSTOM_TRACKER_URL=
       - TZ=Europe/berlin
     volumes:
-      - nas-share-config-aria2:/config
+      - /mnt/f/foldarr/config/aria2:/config
       - nas-share-data:/data
     network_mode: "service:vpn3"
     restart: unless-stopped
@@ -334,7 +334,7 @@ services:
     command: tail -f /dev/null
     volumes:
       - /home/user:/data-old
-      - nas-share-config:/nas/config
+      - /mnt/f/foldarr/config:/nas/config
       - nas-share-data:/data
     restart: always
     user: 1000:1000
@@ -486,11 +486,11 @@ services:
       - serverPort=8266
       - webUIPort=8265
     volumes:
-      - nas-share-config-tdarr:/app/server
-      - nas-share-config-tdarr:/app/configs
-      - nas-share-config-tdarr:/app/logs
+      - /mnt/f/foldarr/config/tdarr:/app/server
+      - /mnt/f/foldarr/config/:/app/configs
+      - /mnt/f/foldarr/config/:/app/logs
       - nas-share-data:/data
-      - nas-share-config-tdarr:/temp
+      - /mnt/f/foldarr/config/:/temp
     labels:
     - "traefik.enable=true"
     - "traefik.http.routers.tdarr.rule=Host(`tdarr.docker`)"
@@ -571,71 +571,6 @@ services:
 
 volumes:
   ovpn-data:
-  nas-share-config:
-    driver_opts:
-      type: cifs
-      o: "uid=0,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},file_mode=0770,dir_mode=0770"
-      device: "//${CIFS_IP}/foldarr/config"
-  nas-share-config-lidarr:
-    driver_opts:
-      type: cifs
-      o: "uid=0,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},file_mode=0770,dir_mode=0770"
-      device: "//${CIFS_IP}/foldarr/config/lidarr"
-  nas-share-config-sonarr:
-    driver_opts:
-      type: cifs
-      o: "uid=0,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},file_mode=0770,dir_mode=0770"
-      device: "//${CIFS_IP}/foldarr/config/sonarr"
-  nas-share-config-readarr:
-    driver_opts:
-      type: cifs
-      o: "uid=0,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},file_mode=0770,dir_mode=0770"
-      device: "//${CIFS_IP}/foldarr/config/readarr"
-  nas-share-config-radarr:
-    driver_opts:
-      type: cifs
-      o: "uid=0,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},file_mode=0770,dir_mode=0770"
-      device: "//${CIFS_IP}/foldarr/config/radarr"
-  nas-share-config-prowlarr:
-    driver_opts:
-      type: cifs
-      o: "uid=0,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},file_mode=0770,dir_mode=0770"
-      device: "//${CIFS_IP}/foldarr/config/prowlarr"
-  nas-share-config-deluge:
-    driver_opts:
-      type: cifs
-      o: "uid=0,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},file_mode=0770,dir_mode=0770"
-      device: "//${CIFS_IP}/foldarr/config/deluge"
-  nas-share-config-jellyfin:
-    driver_opts:
-      type: cifs
-      o: "uid=0,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},file_mode=0770,dir_mode=0770"
-      device: "//${CIFS_IP}/foldarr/config/jellyfin"
-  nas-share-config-muximux:
-    driver_opts:
-      type: cifs
-      o: "uid=0,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},file_mode=0770,dir_mode=0770"
-      device: "//${CIFS_IP}/foldarr/config/muximux"
-  nas-share-config-nzbget:
-    driver_opts:
-      type: cifs
-      o: "uid=0,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},file_mode=0770,dir_mode=0770"
-      device: "//${CIFS_IP}/foldarr/config/nzbget"
-  nas-share-config-aria2:
-    driver_opts:
-      type: cifs
-      o: "uid=0,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},file_mode=0770,dir_mode=0770"
-      device: "//${CIFS_IP}/foldarr/config/aria2"
-  nas-share-config-glances:
-    driver_opts:
-      type: cifs
-      o: "uid=0,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},file_mode=0770,dir_mode=0770"
-      device: "//${CIFS_IP}/foldarr/config/glances"
-  nas-share-config-tdarr:
-    driver_opts:
-      type: cifs
-      o: "uid=0,gid=1000,username=${CIFS_USERNAME},password=${CIFS_PASSWORD},file_mode=0770,dir_mode=0770"
-      device: "//${CIFS_IP}/foldarr/config/tdarr"
   nas-share-data:
     driver_opts:
       type: cifs
