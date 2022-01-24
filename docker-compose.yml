@@ -148,7 +148,7 @@ services:
     #- 51413:51413
     #- 51413:51413/udp
   volumes:
-    - nas-share-config-:/config
+    - nas-share-config-deluge:/config
     - nas-share-data:/data
   environment:
     - PUID=1000
