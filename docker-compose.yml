@@ -59,6 +59,9 @@ services:
    - TZ=Europe/Berlin
   image: linuxserver/sonarr
   network_mode: "service:vpn"
+  links:
+    - vpn2
+    - vpn3
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.sonarr.rule=Host(`sonarr.docker`)"
@@ -83,6 +86,9 @@ services:
    - TZ=Europe/Berlin
   image: linuxserver/lidarr
   network_mode: "service:vpn"
+  links:
+    - vpn2
+    - vpn3
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.lidarr.rule=Host(`lidarr.docker`)"
@@ -107,6 +113,9 @@ services:
     - TZ=Europe/Berlin
   image: linuxserver/readarr:nightly
   network_mode: "service:vpn"
+  links:
+    - vpn2
+    - vpn3
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.readarr.rule=Host(`readarr.docker`)"
@@ -130,6 +139,9 @@ services:
     - TZ=Europe/Berlin
   image: ghcr.io/linuxserver/prowlarr:develop
   network_mode: "service:vpn"
+  links:
+    - vpn2
+    - vpn3
   labels:
     - "traefik.enable=true"
     - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.docker`)"
@@ -140,80 +152,28 @@ services:
    options:
     max-size: 1m
 
- jackett:
-  container_name: jackett
+ deluge:
+  container_name: deluge
   restart: unless-stopped
   #ports:
-   #- 9117:9117
-  volumes:
-   - /home/user/jackett:/config
-  environment:
-   - PUID=1000
-   - PGID=1000
-   - TZ=Europe/Berlin
-  image: linuxserver/jackett
-  network_mode: "service:vpn"
-  labels:
-    - "traefik.enable=true"
-    - "traefik.http.routers.jackett.rule=Host(`jackett.docker`)"
-    - "traefik.http.routers.jackett.entrypoints=web"
-    - "traefik.http.services.jackett.loadbalancer.server.port=9117"
-  logging:
-   driver: json-file
-   options:
-    max-size: 1m
-
- lazylibrarian:
-  container_name: lazylibrarian
-  restart: unless-stopped
-  #ports:
-    #- 5299:5299
-  volumes:
-    - /home/user/lazylib:/config
-    - nas-share-data:/data
-  environment:
-    - PUID=1000
-    - PGID=1000
-    - TZ=Europe/Berlin
-    - DOCKER_MODS=linuxserver/mods:lazylibrarian-ffmpeg #optional
-  image: linuxserver/lazylibrarian
-  network_mode: "service:vpn"
-  labels:
-  - "traefik.enable=true"
-  - "traefik.http.routers.lazylib.rule=Host(`lazylib.docker`)"
-  - "traefik.http.routers.lazylib.entrypoints=web"
-  - "traefik.http.services.lazylib.loadbalancer.server.port=5299"
-  logging:
-   driver: json-file
-   options:
-    max-size: 1m
-
- transmission:
-  container_name: transmission
-  restart: unless-stopped
-  #ports:
-    #- 9091:9091
+    #- 8112:8112
     #- 51413:51413
     #- 51413:51413/udp
   volumes:
-    - /home/user/transmission:/config
+    - /home/user/deluge:/config
     - nas-share-data:/data
   environment:
     - PUID=1000
     - PGID=1000
     - TZ=Europe/Berlin
-    #- TRANSMISSION_WEB_HOME=/combustion-release/ #optional
-    #- USER=username #optional
-    #- PASS=password #optional
-    #- WHITELIST=iplist #optional
-    #- HOST_WHITELIST=dnsnane list #optional
-  image: lscr.io/linuxserver/transmission
+    - DELUGE_LOGLEVEL=error #optional
+  image: lscr.io/linuxserver/deluge
   network_mode: "service:vpn"
   labels:
   - "traefik.enable=true"
-  - "traefik.http.routers.trans.rule=Host(`trans.docker`)"
-  - "traefik.http.routers.trans.entrypoints=web"
-  - "traefik.http.services.trans.loadbalancer.server.port=9091"
+  - "traefik.http.routers.deluge.rule=Host(`deluge.docker`)"
+  - "traefik.http.routers.deluge.entrypoints=web"
+  - "traefik.http.services.deluge.loadbalancer.server.port=8112"
   logging:
    driver: json-file
    options:
@@ -233,6 +193,9 @@ services:
       #- 6789:6789
     restart: unless-stopped
     network_mode: "service:vpn2"
+    links:
+    - vpn1
+    - vpn3
     labels:
     - "traefik.enable=true"
     - "traefik.http.routers.nzbget.rule=Host(`nzbget.docker`)"
@@ -262,6 +225,9 @@ services:
       - /home/user/aria2:/config
       - nas-share-data:/data
     network_mode: "service:vpn3"
+    links:
+    - vpn1
+    - vpn2
     restart: unless-stopped
     logging:
       driver: json-file
@@ -306,6 +272,7 @@ services:
       - nas-share-data:/data
     restart: always
     user: 1000:1000
+    network_mode: "service:vpn"
     # What you see below are defaults. You only need to include things you change.
     environment:
       - TZ=Europe/Berlin
@@ -322,7 +289,7 @@ services:
       - UN_FILE_MODE=0644
       - UN_DIR_MODE=0755
       # Sonarr Config
-      - UN_SONARR_0_URL=http://172.21.0.3:8989
+      - UN_SONARR_0_URL=http://127.0.0.1:8989
       - UN_SONARR_0_API_KEY=
       - UN_SONARR_0_PATHS_0=/data/downloads
       - UN_SONARR_0_PROTOCOLS=torrent
@@ -330,7 +297,7 @@ services:
       - UN_SONARR_0_DELETE_ORIG=true
       - UN_SONARR_0_DELETE_DELAY=5m
       # Radarr Config
-      - UN_RADARR_0_URL=http://172.21.0.3:7878
+      - UN_RADARR_0_URL=http://127.0.0.1:7878
       - UN_RADARR_0_API_KEY=
       - UN_RADARR_0_PATHS_0=/data/downloads
       - UN_RADARR_0_PROTOCOLS=torrent
@@ -338,7 +305,7 @@ services:
       - UN_RADARR_0_DELETE_ORIG=true
       - UN_RADARR_0_DELETE_DELAY=5m
       # Lidarr Config
-      - UN_LIDARR_0_URL=http://172.21.0.3:8686
+      - UN_LIDARR_0_URL=http://127.0.0.1:8686
       - UN_LIDARR_0_API_KEY=
       - UN_LIDARR_0_PATHS_0=/data/downloads
       - UN_LIDARR_0_PROTOCOLS=torrent
@@ -346,7 +313,7 @@ services:
       - UN_LIDARR_0_DELETE_ORIG=true
       - UN_LIDARR_0_DELETE_DELAY=5m
       # Readarr Config
-      - UN_READARR_0_URL=http://172.21.0.3:8787
+      - UN_READARR_0_URL=http://127.0.0.1:8787
       - UN_READARR_0_API_KEY=
       - UN_READARR_0_PATHS_0=/data/downloads
       - UN_READARR_0_PROTOCOLS=torrent
@@ -401,7 +368,7 @@ services:
   restart: unless-stopped
   ports:
     - 8118:8118 # privoxy
-    - 9091:9091 # transmission
+    - 8112:8112 # deluge
     - 5299:5299 # lazylib
     - 9117:9117 # jackett
     - 8686:8686 # lidarr
