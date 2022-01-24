@@ -555,7 +555,7 @@ services:
       - PGID=1000
       - TZ=Europe/Berlin
     volumes:
-      - nas-share-config-muximux:/config
+      - /mnt/f/foldarr/config/muximux:/config
     ports:
       - 9712:80
     restart: unless-stopped
