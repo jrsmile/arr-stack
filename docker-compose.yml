@@ -273,7 +273,7 @@ services:
       # Sonarr Config
       - UN_SONARR_0_URL=http://127.0.0.1:8989
       - UN_SONARR_0_API_KEY=
-      - UN_SONARR_0_PATHS_0=/data/downloads
+      - UN_SONARR_0_PATHS_0=/data/torrents/completed
       - UN_SONARR_0_PROTOCOLS=torrent
       - UN_SONARR_0_TIMEOUT=10s
       - UN_SONARR_0_DELETE_ORIG=true
@@ -281,7 +281,7 @@ services:
       # Radarr Config
       - UN_RADARR_0_URL=http://127.0.0.1:7878
       - UN_RADARR_0_API_KEY=
-      - UN_RADARR_0_PATHS_0=/data/downloads
+      - UN_RADARR_0_PATHS_0=/data/torrents/completed
       - UN_RADARR_0_PROTOCOLS=torrent
       - UN_RADARR_0_TIMEOUT=10s
       - UN_RADARR_0_DELETE_ORIG=true
@@ -289,7 +289,7 @@ services:
       # Lidarr Config
       - UN_LIDARR_0_URL=http://127.0.0.1:8686
       - UN_LIDARR_0_API_KEY=
-      - UN_LIDARR_0_PATHS_0=/data/downloads
+      - UN_LIDARR_0_PATHS_0=/data/torrents/completed
       - UN_LIDARR_0_PROTOCOLS=torrent
       - UN_LIDARR_0_TIMEOUT=10s
       - UN_LIDARR_0_DELETE_ORIG=true
@@ -297,18 +297,18 @@ services:
       # Readarr Config
       - UN_READARR_0_URL=http://127.0.0.1:8787
       - UN_READARR_0_API_KEY=
-      - UN_READARR_0_PATHS_0=/data/downloads
+      - UN_READARR_0_PATHS_0=/data/torrents/completed
       - UN_READARR_0_PROTOCOLS=torrent
       - UN_READARR_0_TIMEOUT=10s
       - UN_READARR_0_DELETE_ORIG=true
       - UN_READARR_0_DELETE_DELAY=5m
       # Folder Config
-      - UN_FOLDER_0_PATH=
-      - UN_FOLDER_0_EXTRACT_PATH=
+      - UN_FOLDER_0_PATH=/data/torrents/completed
+      - UN_FOLDER_0_EXTRACT_PATH=/data/torrents/extracted
       - UN_FOLDER_0_DELETE_AFTER=10m
-      - UN_FOLDER_0_DELETE_ORIGINAL=false
-      - UN_FOLDER_0_DELETE_FILES=false
-      - UN_FOLDER_0_MOVE_BACK=false
+      - UN_FOLDER_0_DELETE_ORIGINAL=true
+      - UN_FOLDER_0_DELETE_FILES=true
+      - UN_FOLDER_0_MOVE_BACK=true
       # Webhook Config
       - UN_WEBHOOK_0_URL=
       - UN_WEBHOOK_0_NAME=
