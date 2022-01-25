@@ -590,6 +590,7 @@ services:
       - "diun.enable=true"
       - "diun.watch_repo=true"
     restart: always
+    network_mode: "service:vpn3"
     logging:
      driver: json-file
      options:
