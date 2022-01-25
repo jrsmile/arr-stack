@@ -208,7 +208,7 @@ services:
       - TZ=Europe/berlin
     volumes:
       - /mnt/f/foldarr/config/aria2:/config
-      - nas-share-data:/data
+      - nas-share-data:/downloads
     network_mode: "service:vpn3"
     restart: unless-stopped
     logging:
@@ -333,7 +333,6 @@ services:
     container_name: netshoot
     command: tail -f /dev/null
     volumes:
-      - /home/user:/data-old
       - /mnt/f/foldarr/config:/nas/config
       - nas-share-data:/data
     restart: always
@@ -581,10 +580,10 @@ services:
       - "LOG_LEVEL=info"
       - "LOG_JSON=false"
       - "DIUN_WATCH_WORKERS=20"
-      - "DIUN_WATCH_SCHEDULE=0 */1 * * *"
+      - "DIUN_WATCH_SCHEDULE=0 */2 * * *"
       - "DIUN_PROVIDERS_DOCKER=true"
       - "DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=true"
-      - "DIUN_NOTIF_DISCORD_WEBHOOKURL=https://discord.com/api/webhooks/935437327164133426/ulfFEq7qShp92jcH8-U4mJe5zhFqtMlJG99vfFX6FhoGyeq3xv75YHHisaKAx2LMPJIG"
+      - "DIUN_NOTIF_DISCORD_WEBHOOKURL=${DISCORD_WEBHOOK}"
       - "DIUN_NOTIF_DISCORD_MENTIONS=@Taddie"
     labels:
       - "diun.enable=true"
