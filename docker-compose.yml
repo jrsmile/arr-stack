@@ -407,7 +407,7 @@ services:
     - 103.86.99.100
   volumes:
     - /etc/localtime:/etc/localtime:ro
-    - ovpn-data:/app/ovpn/config
+    - ovpn-data2:/app/ovpn/config
   environment:
     - USERNAME=${USERNAME}
     - PASSWORD=${PASSWORD}
@@ -439,7 +439,7 @@ services:
     - 103.86.99.100
   volumes:
     - /etc/localtime:/etc/localtime:ro
-    - ovpn-data:/app/ovpn/config
+    - ovpn-data3:/app/ovpn/config
   environment:
     - USERNAME=${USERNAME}
     - PASSWORD=${PASSWORD}
@@ -598,6 +598,8 @@ services:
 
 volumes:
   ovpn-data:
+  ovpn-data2:
+  ovpn-data3:
   nas-share-data:
     driver_opts:
       type: cifs
