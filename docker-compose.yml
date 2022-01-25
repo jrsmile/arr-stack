@@ -272,7 +272,7 @@ services:
       - UN_DIR_MODE=0755
       # Sonarr Config
       - UN_SONARR_0_URL=http://127.0.0.1:8989
-      - UN_SONARR_0_API_KEY=
+      - UN_SONARR_0_API_KEY=${SONARR_API_KEY}
       - UN_SONARR_0_PATHS_0=/data/torrents/completed
       - UN_SONARR_0_PROTOCOLS=torrent
       - UN_SONARR_0_TIMEOUT=10s
@@ -280,7 +280,7 @@ services:
       - UN_SONARR_0_DELETE_DELAY=5m
       # Radarr Config
       - UN_RADARR_0_URL=http://127.0.0.1:7878
-      - UN_RADARR_0_API_KEY=
+      - UN_RADARR_0_API_KEY=${RADARR_API_KEY}
       - UN_RADARR_0_PATHS_0=/data/torrents/completed
       - UN_RADARR_0_PROTOCOLS=torrent
       - UN_RADARR_0_TIMEOUT=10s
@@ -288,7 +288,7 @@ services:
       - UN_RADARR_0_DELETE_DELAY=5m
       # Lidarr Config
       - UN_LIDARR_0_URL=http://127.0.0.1:8686
-      - UN_LIDARR_0_API_KEY=
+      - UN_LIDARR_0_API_KEY=${LIDARR_API_KEY}
       - UN_LIDARR_0_PATHS_0=/data/torrents/completed
       - UN_LIDARR_0_PROTOCOLS=torrent
       - UN_LIDARR_0_TIMEOUT=10s
@@ -296,7 +296,7 @@ services:
       - UN_LIDARR_0_DELETE_DELAY=5m
       # Readarr Config
       - UN_READARR_0_URL=http://127.0.0.1:8787
-      - UN_READARR_0_API_KEY=
+      - UN_READARR_0_API_KEY=${READARR_API_KEY}
       - UN_READARR_0_PATHS_0=/data/torrents/completed
       - UN_READARR_0_PROTOCOLS=torrent
       - UN_READARR_0_TIMEOUT=10s
@@ -564,6 +564,31 @@ services:
     - "traefik.http.routers.muxi.rule=Host(`muxi.docker`)"
     - "traefik.http.routers.muxi.entrypoints=web"
     - "traefik.http.services.muxi.loadbalancer.server.port=9712"
+    logging:
+     driver: json-file
+     options:
+      max-size: 1m
+
+ diun:
+    image: crazymax/diun:latest
+    container_name: diun
+    command: serve
+    volumes:
+      - /mnt/f/foldarr/config/diun:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - "TZ=Europe/Berlin"
+      - "LOG_LEVEL=info"
+      - "LOG_JSON=false"
+      - "DIUN_WATCH_WORKERS=20"
+      - "DIUN_WATCH_SCHEDULE=0 */1 * * *"
+      - "DIUN_PROVIDERS_DOCKER=true"
+      - "DIUN_NOTIF_DISCORD_WEBHOOKURL=https://discord.com/api/webhooks/935437327164133426/ulfFEq7qShp92jcH8-U4mJe5zhFqtMlJG99vfFX6FhoGyeq3xv75YHHisaKAx2LMPJIG"
+      - "DIUN_NOTIF_DISCORD_MENTIONS=@Taddie"
+    labels:
+      - "diun.enable=true"
+      - "diun.watch_repo=true"
+    restart: always
     logging:
      driver: json-file
      options:
