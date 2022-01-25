@@ -583,6 +583,7 @@ services:
       - "DIUN_WATCH_WORKERS=20"
       - "DIUN_WATCH_SCHEDULE=0 */1 * * *"
       - "DIUN_PROVIDERS_DOCKER=true"
+      - "DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=true"
       - "DIUN_NOTIF_DISCORD_WEBHOOKURL=https://discord.com/api/webhooks/935437327164133426/ulfFEq7qShp92jcH8-U4mJe5zhFqtMlJG99vfFX6FhoGyeq3xv75YHHisaKAx2LMPJIG"
       - "DIUN_NOTIF_DISCORD_MENTIONS=@Taddie"
     labels:
